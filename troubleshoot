@@ -1,0 +1,60 @@
+The issue arises because matplotlib==2.1.0 and some of the other packages you’re attempting to install have older dependencies or use deprecated configurations incompatible with your Python environment. Additionally, typing tensorflow==1.15.2 or numpy==1.13.3 directly into PowerShell as a command will fail, as they are package names and need to be installed using pip.
+
+Here’s how to resolve this step by step:
+
+1. Check Python Version
+Tacotron 2 requires older versions of TensorFlow (like 1.15.2), which may not work with newer Python versions. Use Python 3.6–3.8 for compatibility.
+
+Check your Python version:
+
+bash
+Copy code
+python --version
+If you need an older version, install Python 3.8 from the Python Releases page.
+
+2. Create a Virtual Environment
+Using a virtual environment ensures package compatibility and avoids conflicts with system-wide installations.
+
+bash
+Copy code
+python -m venv tacotron_env
+cd tacotron_env
+Scripts\activate  # On Windows
+3. Upgrade Pip and Tools
+Ensure pip, setuptools, and wheel are up to date.
+
+bash
+Copy code
+pip install --upgrade pip setuptools wheel
+4. Install Tacotron 2 Requirements
+Modify the requirements to work with a modern system. For older packages like matplotlib==2.1.0, you may need to adjust dependencies.
+
+Run this script to install all dependencies with compatibility fixes:
+
+bash
+Copy code
+pip install tensorflow==1.15.2
+pip install numpy==1.16.0
+pip install inflect==0.2.5
+pip install librosa==0.6.0
+pip install scipy==1.0.0
+pip install Unidecode==1.0.22
+pip install pillow
+pip install matplotlib==3.3.4  # Newer version compatible with Python 3.8
+5. Handle Matplotlib Compatibility
+If you still encounter errors with matplotlib, try this:
+
+Upgrade to the latest compatible version:
+
+bash
+Copy code
+pip install matplotlib
+If older dependencies are required:
+
+bash
+Copy code
+pip install matplotlib==3.0.0
+6. Run Your Code
+Once all dependencies are installed, retry running Tacotron 2 and follow through with training and voice generation.
+
+If errors persist, let me know the details, and I’ll troubleshoot further.
