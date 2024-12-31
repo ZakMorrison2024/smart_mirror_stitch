@@ -11,25 +11,7 @@
 # Install PyTorch and TorchAudio compatible with your CUDA version.
 !pip install torch torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
 
-# Step 3: Download Pre-Trained Models
-# Download pre-trained Tacotron 2 and WaveGlow models (optional).
-import os
-import urllib.request
-
-output_dir = "pretrained_models"
-os.makedirs(output_dir, exist_ok=True)
-
-# Pre-trained Tacotron 2
-url_tacotron = "https://github.com/NVIDIA/tacotron2/releases/download/v1.0/tacotron2_statedict.pt"
-urllib.request.urlretrieve(url_tacotron, os.path.join(output_dir, "tacotron2_statedict.pt"))
-
-# Pre-trained WaveGlow
-url_waveglow = "https://github.com/NVIDIA/waveglow/releases/download/v1.0/waveglow_256channels_universal_v5.pt"
-urllib.request.urlretrieve(url_waveglow, os.path.join(output_dir, "waveglow_256channels_universal_v5.pt"))
-
-print("Pre-trained models downloaded.")
-
-# Step 4: Prepare Dataset
+# Step 3: Prepare Dataset
 # Organize dataset folder: Ensure audio files are in `data/audio/` and transcripts are in `data/transcripts.txt`.
 import shutil
 
@@ -49,11 +31,11 @@ with open(f"{data_dir}/transcripts.txt", "w") as f:
 
 print("Dataset prepared.")
 
-# Step 5: Preprocess Data
+# Step 4: Preprocess Data
 # Preprocess dataset into mel-spectrograms and text.
 !python tacotron2/preprocess.py --output_directory="preprocessed_data" --dataset_path="data"
 
-# Step 6: Train Tacotron 2 Model
+# Step 5: Train Tacotron 2 Model
 # Customize hyperparameters and train the model.
 !python tacotron2/train.py \
     --output_directory="output_dir" \
@@ -63,7 +45,7 @@ print("Dataset prepared.")
 # Monitor training with TensorBoard.
 !tensorboard --logdir log_dir
 
-# Step 7: Generate Speech (Inference)
+# Step 6: Generate Speech (Inference)
 # Load trained Tacotron 2 model and synthesize text.
 import torch
 from tacotron2.text import text_to_sequence
